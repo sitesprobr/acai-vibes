@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Açaí Vibes – Açaí Artesanal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Quicksand:wght@500;600;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #faf6fd;
+      --card: #ffffff;
+      --ink: #2e0f3e;
+      --muted: #8a7596;
+      --accent: #6a1b9a;
+      --accent2: #ab47bc;
+      --line: #eadcf3;
+      --onaccent: #ffffff;
+    }
+
+    * { box-sizing: border-box }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Quicksand', system-ui, sans-serif;
+      font-weight: 500;
+      line-height: 1.5;
+      padding-bottom: 96px;
+    }
+
+    main { max-width: 620px; margin: 0 auto; padding: 0 18px }
+
+    header {
+      text-align: center; padding: 34px 0 14px;
+      background: radial-gradient(120% 90% at 50% 0%, #7b1fa2 0%, #4a148c 100%);
+      color: #fff; border-radius: 0 0 28px 28px; margin: 0 -18px 10px
+    }
+    header .logo { font-size: 50px; line-height: 1 }
+    h1 {
+      font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 42px; margin: 6px 0 0;
+      letter-spacing: .5px; color: #fff
+    }
+    .tag { color: #f3e5f9; margin: 4px 0 0; font-weight: 600 }
+
+    h2 {
+      font-family: 'Baloo 2', cursive; font-weight: 700; font-size: 23px;
+      color: var(--accent); margin: 30px 0 12px; display: flex; align-items: center; gap: 8px
+    }
+    h2::after { content: ""; flex: 1; height: 2px; background: var(--line); border-radius: 2px }
+
+    ul { list-style: none; margin: 0; padding: 0 }
+
+    .item { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 14px 16px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(106,27,154,.05) }
+    .item .nome { font-family: 'Baloo 2', cursive; font-weight: 700; font-size: 18px; color: var(--ink) }
+    .item .desc { color: var(--muted); font-size: 14px; margin: 2px 0 0 }
+
+    .tamanhos { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px }
+    .tam {
+      display: flex; align-items: center; gap: 8px; border: 1px solid var(--line);
+      border-radius: 999px; padding: 5px 6px 5px 14px; background: #faf4fe
+    }
+    .tam .tn { font-weight: 700; font-size: 14px }
+    .tam .tp { color: var(--accent); font-weight: 700; font-size: 14px }
+    .tam button { width: 30px; height: 30px; border-radius: 50%; border: 0; background: var(--accent); color: #fff; font: 700 18px/1 inherit; cursor: pointer }
+    .tam .cnt { min-width: 16px; text-align: center; font-weight: 700; display: none }
+    .tam.ativo { border-color: var(--accent); background: #f3e5f9 }
+    .tam .minus { background: var(--line); color: var(--ink); display: none }
+
+    .add-li { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 11px 4px; border-bottom: 1px solid var(--line) }
+    .add-li .an { flex: 1 }
+    .add-li .an small { display: block; color: var(--accent); font-weight: 700; font-size: 13px }
+    .q { display: flex; align-items: center; gap: 8px; flex: none }
+    .q button { width: 32px; height: 32px; border-radius: 50%; border: 0; background: var(--line); color: var(--ink); font: 700 18px/1 inherit; cursor: pointer }
+    .q button.add { background: var(--accent); color: #fff }
+    .q output { min-width: 16px; text-align: center; font-weight: 700 }
+
+    .cta { background: var(--card); border: 2px solid var(--accent2); border-radius: 20px; padding: 20px; margin-top: 30px; text-align: center }
+    .cta p { margin: 4px 0 }
+    .cta a { color: var(--accent); font-weight: 700 }
+
+    .info { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 20px; margin-top: 18px }
+    .info h3 { font-family: 'Baloo 2', cursive; font-weight: 700; font-size: 19px; margin: 0 0 10px; color: var(--accent) }
+    .info ul.lista { margin: 0 }
+    .info ul.lista li { display: flex; gap: 8px; padding: 5px 0 }
+    .pix-box { margin-top: 14px; border-top: 1px dashed var(--line); padding-top: 14px }
+    .pix-box .pix-tit { font-weight: 700; margin: 0 0 6px }
+    .pix-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap }
+    .pix-key { flex: 1; min-width: 0; background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; font-weight: 700; color: var(--accent); word-break: break-all }
+    .pix-copy { border: 0; border-radius: 10px; background: var(--accent); color: #fff; font: 700 14px inherit; padding: 10px 16px; cursor: pointer; white-space: nowrap }
+    .pix-nome { color: var(--muted); font-size: 13px; margin: 8px 0 0 }
+
+    .bar { position: fixed; left: 0; right: 0; bottom: 0; padding: 12px 18px calc(12px + env(safe-area-inset-bottom, 0px)); background: var(--bg); border-top: 1px solid var(--line); display: flex; justify-content: center; z-index: 10 }
+    .bar button { width: 100%; max-width: 584px; border: 0; border-radius: 999px; background: var(--accent); color: #fff; font: 700 17px inherit; padding: 14px; cursor: pointer }
+    .bar button:disabled { opacity: .5; cursor: default }
+
+    .overlay { position: fixed; inset: 0; background: rgba(46,15,62,.5); z-index: 20; opacity: 0; pointer-events: none; transition: opacity .25s }
+    .overlay.aberto { opacity: 1; pointer-events: auto }
+
+    .drawer { position: fixed; left: 0; right: 0; bottom: 0; z-index: 21; background: var(--bg); border-radius: 22px 22px 0 0; max-width: 620px; margin: 0 auto; max-height: 85vh; display: flex; flex-direction: column; transform: translateY(100%); transition: transform .28s ease; box-shadow: 0 -8px 30px rgba(46,15,62,.25) }
+    .drawer.aberto { transform: translateY(0) }
+    .drawer-topo { display: flex; align-items: center; justify-content: space-between; padding: 18px 20px 10px }
+    .drawer-topo h3 { font-family: 'Baloo 2', cursive; font-weight: 700; font-size: 21px; margin: 0; color: var(--accent) }
+    .drawer-fechar { width: 36px; height: 36px; border: 0; border-radius: 50%; background: var(--line); color: var(--ink); font: 700 18px/1 inherit; cursor: pointer }
+    .drawer-itens { overflow-y: auto; padding: 4px 20px; flex: 1 }
+    .drawer-itens .vazio { color: var(--muted); text-align: center; padding: 30px 0 }
+    .ci { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line) }
+    .ci .nome { flex: 1 }
+    .drawer-dados { padding: 6px 20px 2px }
+    .drawer-dados label { display: block; font-weight: 700; font-size: 13px; margin: 10px 0 4px }
+    .drawer-dados input, .drawer-dados select { width: 100%; border: 1px solid var(--line); border-radius: 12px; background: var(--card); color: var(--ink); font: 500 15px inherit; padding: 11px }
+    .pix-aviso { display: none; margin-top: 10px; background: var(--card); border: 1px solid var(--accent); border-radius: 12px; padding: 12px }
+    .pix-aviso.show { display: block }
+    .pix-aviso .pix-tit { font-weight: 700; margin: 0 0 6px; font-size: 13px }
+    .drawer-rodape { padding: 14px 20px calc(16px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--line) }
+    .drawer-rodape .btn { width: 100%; border: 0; border-radius: 999px; background: var(--accent); color: #fff; font: 700 17px inherit; padding: 14px; cursor: pointer }
+  </style>
+</head>
+
+<body>
+  <main>
+    <header>
+      <div class="logo">🍧</div>
+      <h1>Açaí Vibes</h1>
+      <p class="tag">Açaí artesanal do seu jeito 💜</p>
+    </header>
+
+    <h2>🍨 Açaís</h2>
+    <div id="acais"></div>
+
+    <h2>➕ Adicionais</h2>
+    <ul id="adicionais"></ul>
+
+    <div class="info">
+      <h3>💳 Formas de Pagamento</h3>
+      <ul class="lista">
+        <li>📱 Pix</li>
+        <li>💳 Cartão de crédito e débito</li>
+        <li>💵 Dinheiro</li>
+      </ul>
+    </div>
+
+    <div class="cta">
+      <p>Peça o seu e aproveite as vibes! 💜</p>
+      <p>WhatsApp: (00) 00000-0000</p>
+    </div>
+  </main>
+
+  <div class="bar"><button id="send" disabled>Escolha seu açaí</button></div>
+
+  <div class="overlay" id="overlay"></div>
+  <aside class="drawer" id="drawer" aria-label="Resumo do pedido">
+    <div class="drawer-topo">
+      <h3>Seu pedido 🛒</h3>
+      <button class="drawer-fechar" id="fechar" aria-label="Fechar">✕</button>
+    </div>
+    <div class="drawer-itens" id="carrinho-itens"></div>
+    <div class="drawer-dados">
+      <label for="c-nome">Seu nome</label>
+      <input id="c-nome" type="text" placeholder="Nome completo">
+      <label for="c-tel">Telefone / WhatsApp</label>
+      <input id="c-tel" type="tel" placeholder="(00) 90000-0000">
+      <label for="c-end">Endereço de entrega</label>
+      <input id="c-end" type="text" placeholder="Rua, número, bairro, referência">
+      <label for="c-pag">Forma de pagamento</label>
+      <select id="c-pag">
+        <option value="">Selecione...</option>
+        <option value="Pix">Pix</option>
+        <option value="Dinheiro">Dinheiro</option>
+        <option value="Cartão de crédito">Cartão de crédito</option>
+        <option value="Cartão de débito">Cartão de débito</option>
+      </select>
+      <label for="c-obs">Observações (opcional)</label>
+      <input id="c-obs" type="text" placeholder="Ex: sem granola, mais morango...">
+    </div>
+    <div class="drawer-rodape">
+      <button class="btn" id="finalizar">Enviar pedido no WhatsApp</button>
+    </div>
+  </aside>
+
+  <script src="menu.js"></script>
+  <script>
+    var WHATS = "0000000000"; // AJUSTAR: numero com DDD, ex 5516999999999
+    var qty = {};
+
+    function key(nome, tam) { return tam ? nome + " (" + tam + ")" : nome; }
+
+    function renderAcais() {
+      var box = document.getElementById("acais");
+      (data.acais || []).forEach(function (a) {
+        var nome = a[0], desc = a[1], tams = a[2] || [];
+        var card = document.createElement("div"); card.className = "item";
+        var h = document.createElement("div"); h.className = "nome"; h.textContent = nome;
+        var d = document.createElement("div"); d.className = "desc"; d.textContent = desc;
+        var row = document.createElement("div"); row.className = "tamanhos";
+        tams.forEach(function (t) {
+          var tn = t[0], tp = t[1], k = key(nome, tn);
+          var pill = document.createElement("div"); pill.className = "tam";
+          var lbl = document.createElement("span"); lbl.className = "tn"; lbl.textContent = tn;
+          var price = document.createElement("span"); price.className = "tp"; price.textContent = tp;
+          var minus = document.createElement("button"); minus.className = "minus"; minus.textContent = "−";
+          var cnt = document.createElement("span"); cnt.className = "cnt";
+          var plus = document.createElement("button"); plus.textContent = "+";
+          function upd() {
+            var c = qty[k] || 0;
+            cnt.textContent = c;
+            cnt.style.display = minus.style.display = c ? "inline-block" : "none";
+            pill.classList.toggle("ativo", !!c);
+            sync();
+          }
+          plus.onclick = function () { qty[k] = (qty[k] || 0) + 1; upd(); };
+          minus.onclick = function () { qty[k] = Math.max(0, (qty[k] || 0) - 1); if (!qty[k]) delete qty[k]; upd(); };
+          pill.append(lbl, price, minus, cnt, plus);
+          row.appendChild(pill);
+        });
+        card.append(h, d, row);
+        box.appendChild(card);
+      });
+    }
+
+    function renderAdicionais() {
+      var ul = document.getElementById("adicionais");
+      (data.adicionais || []).forEach(function (it) {
+        var nome = it[0], preco = it[1], k = key(nome, "adicional");
+        var li = document.createElement("li"); li.className = "add-li";
+        var an = document.createElement("div"); an.className = "an";
+        an.textContent = nome;
+        var sm = document.createElement("small"); sm.textContent = preco; an.appendChild(sm);
+        var q = document.createElement("div"); q.className = "q";
+        var minus = document.createElement("button"); minus.textContent = "−"; minus.hidden = true;
+        var out = document.createElement("output"); out.hidden = true;
+        var plus = document.createElement("button"); plus.textContent = "+"; plus.className = "add";
+        function upd() { var c = qty[k] || 0; minus.hidden = out.hidden = !c; out.textContent = c; sync(); }
+        plus.onclick = function () { qty[k] = (qty[k] || 0) + 1; upd(); };
+        minus.onclick = function () { qty[k] = Math.max(0, (qty[k] || 0) - 1); if (!qty[k]) delete qty[k]; upd(); };
+        q.append(minus, out, plus);
+        li.append(an, q);
+        ul.appendChild(li);
+      });
+    }
+
+    renderAcais();
+    renderAdicionais();
+
+    function totalItens() { var t = 0; for (var k in qty) t += qty[k]; return t; }
+
+    function labelCarrinho(k) { return k.replace(" (adicional)", " (adicional)"); }
+
+    function sync() {
+      var t = totalItens();
+      var b = document.getElementById("send");
+      b.disabled = !t;
+      b.textContent = t ? "Ver pedido (" + t + (t > 1 ? " itens" : " item") + ")" : "Escolha seu açaí";
+      if (document.getElementById("drawer").classList.contains("aberto")) renderCarrinho();
+    }
+
+    function renderCarrinho() {
+      var box = document.getElementById("carrinho-itens");
+      box.innerHTML = "";
+      var keys = []; for (var k in qty) if (qty[k]) keys.push(k);
+      var dados = document.querySelector(".drawer-dados");
+      if (!keys.length) {
+        var v = document.createElement("p"); v.className = "vazio";
+        v.textContent = "Seu pedido está vazio.";
+        box.appendChild(v);
+        document.getElementById("finalizar").disabled = true;
+        if (dados) dados.style.display = "none";
+        return;
+      }
+      if (dados) dados.style.display = "";
+      document.getElementById("finalizar").disabled = false;
+      keys.forEach(function (n) {
+        var row = document.createElement("div"); row.className = "ci";
+        var nome = document.createElement("span"); nome.className = "nome"; nome.textContent = labelCarrinho(n);
+        var q = document.createElement("div"); q.className = "q";
+        var minus = document.createElement("button"); minus.textContent = "−";
+        var out = document.createElement("output"); out.textContent = qty[n];
+        var plus = document.createElement("button"); plus.textContent = "+"; plus.className = "add";
+        minus.onclick = function () { qty[n] = Math.max(0, qty[n] - 1); if (!qty[n]) delete qty[n]; sync(); };
+        plus.onclick = function () { qty[n] = (qty[n] || 0) + 1; sync(); };
+        q.append(minus, out, plus);
+        row.append(nome, q);
+        box.appendChild(row);
+      });
+    }
+
+    function abrirCarrinho() { renderCarrinho(); document.getElementById("overlay").classList.add("aberto"); document.getElementById("drawer").classList.add("aberto"); }
+    function fecharCarrinho() { document.getElementById("overlay").classList.remove("aberto"); document.getElementById("drawer").classList.remove("aberto"); }
+
+    document.getElementById("send").onclick = abrirCarrinho;
+    document.getElementById("fechar").onclick = fecharCarrinho;
+    document.getElementById("overlay").onclick = fecharCarrinho;
+
+    function val(id) { var e = document.getElementById(id); return e && e.value ? e.value.trim() : ""; }
+    document.getElementById("finalizar").onclick = function () {
+      if (!totalItens()) return;
+      var pag = val("c-pag");
+      if (!pag) { alert("Escolha a forma de pagamento."); document.getElementById("c-pag").focus(); return; }
+      var lines = []; for (var k in qty) if (qty[k]) lines.push("• " + qty[k] + "x " + labelCarrinho(k));
+      var nome = val("c-nome"), tel = val("c-tel"), end = val("c-end"), obs = val("c-obs");
+      var msg = "Olá! Gostaria de fazer um pedido na Açaí Vibes:\n" + lines.join("\n");
+      if (nome) msg += "\n\nNome: " + nome;
+      if (tel) msg += "\nTelefone: " + tel;
+      if (end) msg += "\nEndereço: " + end;
+      msg += "\nForma de pagamento: " + pag;
+      if (obs) msg += "\nObservações: " + obs;
+      window.open("https://wa.me/" + WHATS + "?text=" + encodeURIComponent(msg), "_blank");
+    };
+  </script>
+</body>
+
+</html>
