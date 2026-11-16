@@ -138,11 +138,19 @@
         <li>💳 Cartão de crédito e débito</li>
         <li>💵 Dinheiro</li>
       </ul>
+      <div class="pix-box">
+        <p class="pix-tit">📱 Chave Pix (celular)</p>
+        <div class="pix-row">
+          <span class="pix-key" id="pix-key">48984534704</span>
+          <button class="pix-copy" id="pix-copy" type="button">Copiar</button>
+        </div>
+        <p class="pix-nome">Titular: Alexsandro</p>
+      </div>
     </div>
 
     <div class="cta">
       <p>Peça o seu e aproveite as vibes! 💜</p>
-      <p>WhatsApp: (00) 00000-0000</p>
+      <p>WhatsApp: (48) 98453-4704</p>
     </div>
   </main>
 
@@ -159,7 +167,7 @@
       <label for="c-nome">Seu nome</label>
       <input id="c-nome" type="text" placeholder="Nome completo">
       <label for="c-tel">Telefone / WhatsApp</label>
-      <input id="c-tel" type="tel" placeholder="(00) 90000-0000">
+      <input id="c-tel" type="tel" placeholder="(48) 90000-0000">
       <label for="c-end">Endereço de entrega</label>
       <input id="c-end" type="text" placeholder="Rua, número, bairro, referência">
       <label for="c-pag">Forma de pagamento</label>
@@ -170,6 +178,14 @@
         <option value="Cartão de crédito">Cartão de crédito</option>
         <option value="Cartão de débito">Cartão de débito</option>
       </select>
+      <div class="pix-aviso" id="pix-aviso">
+        <p class="pix-tit">📱 Pague no Pix e envie o comprovante:</p>
+        <div class="pix-row">
+          <span class="pix-key" id="pix-key2">48984534704</span>
+          <button class="pix-copy" id="pix-copy2" type="button">Copiar</button>
+        </div>
+        <p class="pix-nome">Titular: Alexsandro</p>
+      </div>
       <label for="c-obs">Observações (opcional)</label>
       <input id="c-obs" type="text" placeholder="Ex: sem granola, mais morango...">
     </div>
@@ -180,7 +196,9 @@
 
   <script src="menu.js"></script>
   <script>
-    var WHATS = "0000000000"; // AJUSTAR: numero com DDD, ex 5516999999999
+    var WHATS = "5548984534704";
+    var PIX_CHAVE = "48984534704";
+    var PIX_TITULAR = "Alexsandro";
     var qty = {};
 
     function key(nome, tam) { return tam ? nome + " (" + tam + ")" : nome; }
@@ -291,6 +309,26 @@
     document.getElementById("fechar").onclick = fecharCarrinho;
     document.getElementById("overlay").onclick = fecharCarrinho;
 
+    function copiarPix(btn) {
+      var txt = PIX_CHAVE;
+      function ok() { var orig = btn.textContent; btn.textContent = "Copiado!"; setTimeout(function () { btn.textContent = orig; }, 1800); }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(txt).then(ok, function () { fallback(); });
+      } else { fallback(); }
+      function fallback() {
+        var t = document.createElement("textarea"); t.value = txt; document.body.appendChild(t); t.select();
+        try { document.execCommand("copy"); ok(); } catch (e) {}
+        document.body.removeChild(t);
+      }
+    }
+    document.getElementById("pix-copy").onclick = function () { copiarPix(this); };
+    document.getElementById("pix-copy2").onclick = function () { copiarPix(this); };
+
+    document.getElementById("c-pag").onchange = function () {
+      var av = document.getElementById("pix-aviso");
+      if (this.value === "Pix") av.classList.add("show"); else av.classList.remove("show");
+    };
+
     function val(id) { var e = document.getElementById(id); return e && e.value ? e.value.trim() : ""; }
     document.getElementById("finalizar").onclick = function () {
       if (!totalItens()) return;
@@ -303,6 +341,7 @@
       if (tel) msg += "\nTelefone: " + tel;
       if (end) msg += "\nEndereço: " + end;
       msg += "\nForma de pagamento: " + pag;
+      if (pag === "Pix") msg += "\nChave Pix: " + PIX_CHAVE + " (" + PIX_TITULAR + ")";
       if (obs) msg += "\nObservações: " + obs;
       window.open("https://wa.me/" + WHATS + "?text=" + encodeURIComponent(msg), "_blank");
     };
